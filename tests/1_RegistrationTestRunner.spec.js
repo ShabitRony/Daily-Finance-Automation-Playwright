@@ -14,15 +14,15 @@ const token = "process.env.GMAIL_OAUTH_TOKEN";
 test("User Registration with Gmail Congratulations Assertion", async ({ page, request }) => {
   await page.goto("/");
 
-  const reg = new RegistrationPage(page);
-  const userModel = {
-    firstName: faker.person.firstName(),
-    lastName: faker.person.lastName(),
-    email: "shabitalahi123+643@gmail.com",
-    password: "1234",
-    phoneNumber: `014${generateRandomId(10000000, 99999999)}`,
-    address: faker.location.city()
-  };
+    const reg = new RegistrationPage(page);
+    const userModel ={
+        firstName : faker.person.firstName(),
+        lastName : faker.person.lastName(),
+        email : "shabitalahi123+623@gmail.com",
+        password:"1234",
+        phoneNumber:`014${generateRandomId(10000000,99999999)}`,
+        address:faker.location.city()
+    }
 
   await reg.registerUser(userModel);
 
