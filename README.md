@@ -1,4 +1,4 @@
-# 🧪 Daily Finance Functional Automation Testing with Playwright
+# 💰 Daily Finance Functional Automation Testing with Playwright
 - This project contains a **functional test suite** built using **[Playwright](https://playwright.dev/)** for the website:  
 🔗 [https://dailyfinance.roadtocareer.net/](https://dailyfinance.roadtocareer.net/)
 # Test Case Link
