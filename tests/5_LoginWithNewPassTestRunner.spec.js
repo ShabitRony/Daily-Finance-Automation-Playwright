@@ -9,7 +9,7 @@ test("User Login With New Password", async ({page})=>{
     const latestUser = jsonData[jsonData.length-1];
     const login = new LoginPage(page);
     await page.waitForTimeout(5000);
-    await login.doLogin(latestUser.email, "12345");
+    await login.doLogin(latestUser.email, latestUser.password);
 
     await expect(page.getByText("Dashboard")).toBeVisible({timeout:20000});
 
