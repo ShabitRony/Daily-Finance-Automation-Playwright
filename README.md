@@ -57,6 +57,11 @@ Verify successful login
 # Allure Report Behaviors
 ![plywrightallurer19](https://github.com/user-attachments/assets/d9e468b7-b0d4-4ee8-a9cf-a39f5910ece1)
 
+# Recorded Video of the Automation Process
+
+
+https://github.com/user-attachments/assets/25c7a03a-a889-4219-a5c1-1e5f2bdf5df7
+
 
     
 
