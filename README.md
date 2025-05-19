@@ -53,14 +53,14 @@ This test simulates a user journey through key features of the Daily Finance pla
 
 - Verify successful login
 # Allure Report OverView
-![plywrightallure9](https://github.com/user-attachments/assets/5fbc0ce6-38f6-40c2-a7e8-9702aab1ec66)
+![playwrightallurefinal](https://github.com/user-attachments/assets/b0959d69-eda8-42c5-9688-ab290cde8e5e)
+
 # Allure Report Behaviors
-![plywrightallurer19](https://github.com/user-attachments/assets/d9e468b7-b0d4-4ee8-a9cf-a39f5910ece1)
+![Playwrightallurefinal2](https://github.com/user-attachments/assets/2ddb5381-cc25-4d00-a543-bed58398da54)
+
 
 # Recorded Video of the Automation Process
-
-
-https://github.com/user-attachments/assets/25c7a03a-a889-4219-a5c1-1e5f2bdf5df7
+https://github.com/user-attachments/assets/e368d243-4445-4248-bdba-153c89c8cd2e
 
 
     
