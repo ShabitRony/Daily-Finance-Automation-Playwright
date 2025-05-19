@@ -52,6 +52,11 @@ Set a new password
 Login using the updated credentials
 
 Verify successful login
+# Allure Report OverView
+![plywrightallure9](https://github.com/user-attachments/assets/5fbc0ce6-38f6-40c2-a7e8-9702aab1ec66)
+# Allure Report Behaviors
+![plywrightallurer19](https://github.com/user-attachments/assets/d9e468b7-b0d4-4ee8-a9cf-a39f5910ece1)
+
 
     
 
