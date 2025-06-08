@@ -36,7 +36,7 @@ jobs:
 
       # ✅ Run tests
       - name: Run Playwright Tests
-        run: npx playwright test
+        run: npx playwright test --headed=false
 
       # ✅ Upload Playwright HTML Report even if tests fail
       - name: Upload Playwright HTML Report
