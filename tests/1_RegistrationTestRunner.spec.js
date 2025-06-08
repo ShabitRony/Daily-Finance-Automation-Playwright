@@ -18,7 +18,7 @@ test("User Registration with Gmail Congratulations Assertion", async ({ page, re
   const userModel = {
     firstName: faker.person.firstName(),
     lastName: faker.person.lastName(),
-    email: "shabitalahi123+642@gmail.com",
+    email: "shabitalahi123+643@gmail.com",
     password: "1234",
     phoneNumber: `014${generateRandomId(10000000, 99999999)}`,
     address: faker.location.city()
