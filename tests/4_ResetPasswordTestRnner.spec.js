@@ -8,7 +8,7 @@ dotenv.config();
 
 
 const baseURL= "https://gmail.googleapis.com";
-const token = "process.env.GMAIL_OAUTH_TOKEN";
+const token = process.env.GMAIL_API_TOKEN;
 
 test("Reset Password",async({page , request})=>{
     await page.goto("/");

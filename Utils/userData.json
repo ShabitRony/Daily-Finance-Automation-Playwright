@@ -38,5 +38,85 @@
     "password": "12345",
     "phoneNumber": "01421675025",
     "address": "Aubreyshire"
+  },
+  {
+    "firstName": "Jeanie",
+    "lastName": "Hickle",
+    "email": "shabitalahi123+643@gmail.com",
+    "password": "1234",
+    "phoneNumber": "01463227629",
+    "address": "West Sven"
+  },
+  {
+    "firstName": "Willie",
+    "lastName": "Reichert",
+    "email": "shabitalahi123+646@gmail.com",
+    "password": "1234",
+    "phoneNumber": "01425220177",
+    "address": "Fort Marlon"
+  },
+  {
+    "firstName": "Nyasia",
+    "lastName": "Rath",
+    "email": "shabitalahi123+647@gmail.com",
+    "password": "1234",
+    "phoneNumber": "01420468333",
+    "address": "Julianabury"
+  },
+  {
+    "firstName": "Everardo",
+    "lastName": "Hilll",
+    "email": "shabitalahi123+648@gmail.com",
+    "password": "1234",
+    "phoneNumber": "01471471016",
+    "address": "New Wendyhaven"
+  },
+  {
+    "firstName": "Cornelius",
+    "lastName": "O'Hara-Schultz",
+    "email": "shabitalahi123+649@gmail.com",
+    "password": "1234",
+    "phoneNumber": "01464880432",
+    "address": "Hoegerville"
+  },
+  {
+    "firstName": "Douglas",
+    "lastName": "Ratke",
+    "email": "shabitalahi123+650@gmail.com",
+    "password": "1234",
+    "phoneNumber": "01460354635",
+    "address": "East Ruben"
+  },
+  {
+    "firstName": "Shanelle",
+    "lastName": "Beer",
+    "email": "shabitalahi123+651@gmail.com",
+    "password": "1234",
+    "phoneNumber": "01495526739",
+    "address": "Libbyboro"
+  },
+  {
+    "firstName": "Isaac",
+    "lastName": "McCullough",
+    "email": "shabitalahi123+652@gmail.com",
+    "password": "12345",
+    "phoneNumber": "01487511609",
+    "address": "East Aronfort"
+  },
+  {
+    "firstName": "Austyn",
+    "lastName": "Cremin",
+    "email": "shabitalahi123+653@gmail.com",
+    "password": "1234",
+    "phoneNumber": "01410405474",
+    "address": "Gerlachville"
+  },
+  {
+    "firstName": "Joesph",
+    "lastName": "Romaguera",
+    "email": "shabitalahi123+654@gmail.com",
+    "password": "1234",
+    "phoneNumber": "01421154401",
+    "address": "Sporerside"
   }
 ]

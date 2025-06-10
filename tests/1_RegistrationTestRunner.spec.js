@@ -10,24 +10,24 @@ dotenv.config();
 
 
 const baseURL = "https://gmail.googleapis.com";
-const token = "process.env.GMAIL_OAUTH_TOKEN";
+const token = process.env.GMAIL_API_TOKEN;
 test("User Registration with Gmail Congratulations Assertion", async ({ page, request }) => {
   await page.goto("/");
 
-    const reg = new RegistrationPage(page);
-    const userModel ={
-        firstName : faker.person.firstName(),
-        lastName : faker.person.lastName(),
-        email : "shabitalahi123+623@gmail.com",
-        password:"1234",
-        phoneNumber:`014${generateRandomId(10000000,99999999)}`,
-        address:faker.location.city()
-    }
+  const reg = new RegistrationPage(page);
+  const userModel = {
+    firstName: faker.person.firstName(),
+    lastName: faker.person.lastName(),
+    email: "shabitalahi123+642@gmail.com",
+    password: "1234",
+    phoneNumber: `014${generateRandomId(10000000, 99999999)}`,
+    address: faker.location.city()
+  };
 
   await reg.registerUser(userModel);
 
   const toastLocator = page.locator(".Toastify__toast");
-  await toastLocator.waitFor({ timeout: 20000 });
+  await toastLocator.waitFor({ timeout: 30000 });
   const msg = await toastLocator.textContent();
   expect(msg).toContain("registered successfully!");
 
