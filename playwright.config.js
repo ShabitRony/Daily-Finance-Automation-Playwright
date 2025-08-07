@@ -21,7 +21,7 @@ export default defineConfig({
   /* Run tests in files in parallel */
   fullyParallel: true,
   /* Fail the build on CI if you accidentally left test.only in the source code. */
-  timeout:10000,
+  timeout:60000,
   forbidOnly: !!process.env.CI,
   /* Retry on CI only */
   retries: 0,
@@ -31,15 +31,15 @@ export default defineConfig({
   // reporter: 'html',
   /* Shared settings for all the projects below. See https://playwright.dev/docs/api/class-testoptions. */
   expect:{
-    timeout:4000,
+    timeout:60000,
   },
   use: {
     /* Base URL to use in actions like `await page.goto('/')`. */
     baseURL: 'https://dailyfinance.roadtocareer.net/',
     video:"on-first-retry",
     screenshot:"only-on-failure",
-    headless:true,
-    actionTimeout:10000,
+    headless:false,
+    actionTimeout:60000,
 
     /* Collect trace when retrying the failed test. See https://playwright.dev/docs/trace-viewer */
     trace: 'on-first-retry',
@@ -58,8 +58,25 @@ export default defineConfig({
     {
       name: 'chromium',
       use: { ...devices['Desktop Chrome'] },
+      
     },
-
+    //  {
+    //   name: 'smoke',
+    //   testMatch: [
+    //     'tests/1_RegistrationTestRunner.spec.js',
+    //     'tests/2_AddCostTestRunner.spec.js',
+    //   ],
+    // },
+    // {
+    //   name: 'regression',
+    //   testMatch: [
+    //     'tests/1_RegistrationTestRunner.spec.js',
+    //     'tests/2_AddCostTestRunner.spec.js',
+    //     'tests/3_UploadPhotoTestRunner.spec.js',
+    //     'tests/4_ResetPasswordTestRnner.spec.js',
+    //     'tests/5_LoginWithNewPassTestRunner.spec.js',
+    //   ],
+    // }
     // {
     //   name: 'firefox',
     //   use: { ...devices['Desktop Firefox'] },

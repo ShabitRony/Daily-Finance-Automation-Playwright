@@ -1,64 +1,49 @@
 import { test, expect } from "@playwright/test";
-import { faker } from '@faker-js/faker';
+import { faker } from "@faker-js/faker";
 import jsonData from "../Utils/userData.json";
 import fs from "fs";
+import dotenv from "dotenv";
 import RegistrationPage from "../pages/RegistrationPage.js";
 import { generateRandomId } from "../Utils/utils.js";
-import path from "path";
-import dotenv from 'dotenv';
+import { getLatestEmailDetails } from "../Utils/gmailUtils.js";
+
 dotenv.config();
 
-
-const baseURL = "https://gmail.googleapis.com";
-const token = process.env.GMAIL_API_TOKEN;
 test("User Registration with Gmail Congratulations Assertion", async ({ page, request }) => {
-  await page.goto("/");
+  try {
+    await page.goto("/");
 
-  const reg = new RegistrationPage(page);
-  const userModel = {
-    firstName: faker.person.firstName(),
-    lastName: faker.person.lastName(),
-    email: "shabitalahi123+642@gmail.com",
-    password: "1234",
-    phoneNumber: `014${generateRandomId(10000000, 99999999)}`,
-    address: faker.location.city()
-  };
+    const reg = new RegistrationPage(page);
+    const userModel = {
+      firstName: faker.person.firstName(),
+      lastName: faker.person.lastName(),
+      email: "shabitalahi123+714@gmail.com",
+      password: "1234",
+      phoneNumber: `014${generateRandomId(10000000, 99999999)}`,
+      address: faker.location.city(),
+    };
 
-  await reg.registerUser(userModel);
+    await reg.registerUser(userModel);
 
-  const toastLocator = page.locator(".Toastify__toast");
-  await toastLocator.waitFor({ timeout: 30000 });
-  const msg = await toastLocator.textContent();
-  expect(msg).toContain("registered successfully!");
+    const toastLocator = page.locator(".Toastify__toast");
+    await toastLocator.waitFor({ timeout: 30000 });
+    const msg = await toastLocator.textContent();
+    expect(msg).toContain("registered successfully!");
 
-  jsonData.push(userModel);
-  fs.writeFileSync("./Utils/userData.json", JSON.stringify(jsonData, null, 2));
+    jsonData.push(userModel);
+    fs.writeFileSync("./Utils/userData.json", JSON.stringify(jsonData, null, 2));
 
-  const response1 = await request.get(baseURL + "/gmail/v1/users/me/messages/", {
-    headers: {
-      "Accept": "application/json",
-      "Authorization": "Bearer " + token,
-    }
-  });
+    // ⏳ Wait for email to arrive
+    await page.waitForTimeout(60000);
 
-  const data = await response1.json();
-  const emailId = data.messages[0].id;
+    const { subject, link } = await getLatestEmailDetails(request);
+    console.log("✅ Email Subject:", subject);
+    console.log("🔗 Email Link:", link || "No link found in email");
 
-  const response2 = await request.get(baseURL + "/gmail/v1/users/me/messages/" + emailId, {
-    headers: {
-      "Accept": "application/json",
-      "Authorization": "Bearer " + token,
-    }
-  });
+    expect(subject).toContain("Congratulations on Registering!");
+  } catch (error) {
+    console.error("❌ Test failed due to an error:", error);
+    throw error;
+  }
+}, 120000); // ✅ Increased timeout to 2 minutes
 
-   const emailDetails = await response2.json();
-
-  // Extract subject from headers
-  const subjectHeader = emailDetails.payload.headers.find(
-    (header) => header.name === "Subject"
-  );
-  const subject = subjectHeader?.value || "";
-  console.log("Email Subject:", subject);
-
-  expect(subject).toContain("Congratulations on Registering!");
-},60000);

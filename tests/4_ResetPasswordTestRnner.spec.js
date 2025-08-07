@@ -1,69 +1,29 @@
-import {test,expect} from "@playwright/test";
-import jsonData from "../Utils/userData.json";
+import { test, expect } from "@playwright/test";
 import { ResetPasswordPage } from "../pages/ResetPasswordPage";
-import fs from 'fs';
-import path from 'path';
-import dotenv from 'dotenv';
-dotenv.config();
+import { getLatestEmailDetails } from "../Utils/gmailUtils";
+import { getLatestUser, updateLatestUserPassword } from "../Utils/userUtils";
 
-
-const baseURL= "https://gmail.googleapis.com";
-const token = process.env.GMAIL_API_TOKEN;
-
-test("Reset Password",async({page , request})=>{
+test("Reset Password", async ({ page, request }) => {
     await page.goto("/");
 
-    const latestUser = jsonData[jsonData.length-1];
-    const resetPassword = new ResetPasswordPage(page);
-    await resetPassword.resetPassword(latestUser.email);
-    await page.waitForTimeout(5000);
+    const user = getLatestUser();
+    const resetPage = new ResetPasswordPage(page);
+    await resetPage.requestReset(user.email);
 
+    await page.waitForTimeout(30000); // Optional: replace with wait for email logic
 
-    const response1 = await request.get(baseURL+"/gmail/v1/users/me/messages/" , {
+     const { link: resetLink, subject } = await getLatestEmailDetails(request);
+  console.log("📧 Reset Email Subject:", subject);
+  console.log("🔗 Reset Link:", resetLink);
 
+  if (!resetLink) throw new Error("Reset link not found in email");
 
-        headers:{
-            "Accept":"application/json",
-            "Authorization":"Bearer "+token,
-        }
-    })
-
-    const data = await response1.json();
-    // console.log(data);
-    const emailId = data.messages[0].id;
-
-     const response2 = await request.get(baseURL+"/gmail/v1/users/me/messages/"+emailId , {
-
-
-        headers:{
-            "Accept":"application/json",
-            "Authorization":"Bearer "+token,
-        }
-    })
-    const resJson = await response2.json();
-    console.log(resJson.snippet);
-    const snippet = resJson.snippet;
-    const linkMatch = snippet.match(/https?:\/\/[^\s]+/);
-    if (linkMatch) {
-    const resetLink = linkMatch[0];
-    console.log("Reset Link:", resetLink);
-        
-  // Navigate to the reset link
   await page.goto(resetLink);
-}
-    const newpass = "12345";
-    const setPassword = new ResetPasswordPage(page);
-    await setPassword.newPassword(newpass);
 
-    const filePath = path.resolve("Utils/userData.json");
-    const users = JSON.parse(fs.readFileSync(filePath, 'utf-8'));
+  const newPassword = "12345";
+  await resetPage.setNewPassword(newPassword);
 
-    users[users.length - 1].password =newpass;
-
-    fs.writeFileSync(filePath, JSON.stringify(users, null, 2), 'utf-8');
-    console.log("Password updated in userData.json for last registered user");
-
-
-    // await page.pause();
-
+  updateLatestUserPassword(newPassword);
+  console.log("✅ Password updated for user:", user.email);
 });
+
