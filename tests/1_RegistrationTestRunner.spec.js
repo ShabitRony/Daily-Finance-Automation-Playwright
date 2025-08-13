@@ -1,49 +1,56 @@
 import { test, expect } from "@playwright/test";
 import { faker } from "@faker-js/faker";
+import RegistrationPage from "../pages/RegistrationPage.js";
+import { getLatestEmailDetails } from "../Utils/gmailUtils";
 import jsonData from "../Utils/userData.json";
 import fs from "fs";
-import dotenv from "dotenv";
-import RegistrationPage from "../pages/RegistrationPage.js";
 import { generateRandomId } from "../Utils/utils.js";
-import { getLatestEmailDetails } from "../Utils/gmailUtils.js";
+import { userInfo } from "os";
 
-dotenv.config();
 
-test("User Registration with Gmail Congratulations Assertion", async ({ page, request }) => {
-  try {
-    await page.goto("/");
+test("Registration Email Assertion - Congratulations on Registering!", async ({ page, request }) => {
+  await page.goto("/");
 
-    const reg = new RegistrationPage(page);
-    const userModel = {
-      firstName: faker.person.firstName(),
-      lastName: faker.person.lastName(),
-      email: "shabitalahi123+714@gmail.com",
-      password: "1234",
-      phoneNumber: `014${generateRandomId(10000000, 99999999)}`,
-      address: faker.location.city(),
-    };
+  // 1️⃣ Create new user model
+  const userModel = {
+    firstName: faker.person.firstName(),
+    lastName: faker.person.lastName(),
+    email:`shabitalahi123+regtest${Date.now()}@gmail.com`, // Change if needed
+    password: "1234",
+    phoneNumber: `014${generateRandomId(10000000, 99999999)}`,
+    address: faker.location.city(),
+    // userId: Response.id,
+  };
 
-    await reg.registerUser(userModel);
+  // 2️⃣ Register user
+  const reg = new RegistrationPage(page);
+  await reg.registerUser(userModel);
 
-    const toastLocator = page.locator(".Toastify__toast");
-    await toastLocator.waitFor({ timeout: 30000 });
-    const msg = await toastLocator.textContent();
-    expect(msg).toContain("registered successfully!");
+  // 3️⃣ Wait for toast and assert registration success
+  const toastLocator = page.locator(".Toastify__toast");
+  await toastLocator.waitFor({ timeout: 30000 });
+  const msg = await toastLocator.textContent();
+  expect(msg).toContain("registered successfully!");
+  console.log(msg);
 
-    jsonData.push(userModel);
-    fs.writeFileSync("./Utils/userData.json", JSON.stringify(jsonData, null, 2));
 
-    // ⏳ Wait for email to arrive
-    await page.waitForTimeout(60000);
+  // 4️⃣ Save new user for reference
+  jsonData.push(userModel);
+  fs.writeFileSync("./Utils/userData.json", JSON.stringify(jsonData, null, 2));
+  console.log("User saved with ID:", userModel.userId);
 
-    const { subject, link } = await getLatestEmailDetails(request);
-    console.log("✅ Email Subject:", subject);
-    console.log("🔗 Email Link:", link || "No link found in email");
+  // 5️⃣ Wait briefly (better to replace with retry loop later)
+  await page.waitForTimeout(30000);
 
-    expect(subject).toContain("Congratulations on Registering!");
-  } catch (error) {
-    console.error("❌ Test failed due to an error:", error);
-    throw error;
-  }
-}, 120000); // ✅ Increased timeout to 2 minutes
+  // 6️⃣ Fetch registration email with subject filter
+  const { subject, link, body } = await getLatestEmailDetails(
+    request,
+    "Congratulations on Registering!"
+  );
 
+  console.log("📧 Registration Email Subject:", subject);
+  console.log("📄 Email Body:", body);
+
+  // 7️⃣ Assert subject contains expected phrase
+  expect(subject).toContain("Congratulations on Registering!");
+});
